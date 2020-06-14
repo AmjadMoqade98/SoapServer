@@ -2,20 +2,20 @@ package com.example.BackEnd.model;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.Date;
-
 public class Bundle {
 
     @Id
     private int id ;
     private Double size ;
     private Double price  ;
-    private String activate_date ;
+    private String activateDate;
     private String end_date ;
-
 
     public int getId() {
         return id;
+    }
+    public void setId(int id) {
+        this.id = id ;
     }
 
     public Double getSize() {
@@ -27,7 +27,7 @@ public class Bundle {
     }
 
     public String getactivate_date() {
-        return activate_date;
+        return activateDate;
     }
 
     public String getEnd_date() {
@@ -43,12 +43,10 @@ public class Bundle {
     }
 
     public void setactivate_date(String activate_date) {
-        this.activate_date = activate_date;
+        this.activateDate = activate_date;
     }
 
     public void setEnd_date(String end_date) {
         this.end_date = end_date;
     }
-
-
 }

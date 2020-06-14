@@ -1,9 +1,7 @@
 package com.example.BackEnd.runnable;
 
 import com.example.BackEnd.model.Bundle;
-import com.example.BackEnd.repository.BundleRepository;
 import com.example.BackEnd.service.BundleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -29,7 +27,7 @@ public class Consumer  implements  Runnable{
 
             if (bundle != null) {
                 RestTemplate restTemplate = new RestTemplate();
-                final String baseUrl = "http://localhost:8099"+"/bundles";
+                final String baseUrl = "http://localhost:8099/bundles";
                 URI uri = null;
                 try {
                     uri = new URI(baseUrl);

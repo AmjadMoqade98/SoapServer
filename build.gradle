@@ -1,9 +1,17 @@
+
+buildscript {
+	repositories {
+		maven { url "https://repo.spring.io/libs-release" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+	}
+}
 plugins {
 	id 'org.springframework.boot' version '2.3.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 }
-
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -66,21 +74,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.apache.kafka:kafka-streams'
 	implementation 'org.springframework.kafka:spring-kafka'
-	compile "com.aerospike:spring-data-aerospike:1.0.2.RELEASE"
+	implementation "com.aerospike:spring-data-aerospike:1.0.2.RELEASE"
 	implementation "org.springframework.boot:spring-boot-starter-web"
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-
-
 	implementation 'org.glassfish.jaxb:jaxb-runtime'
 	compile(files(genJaxb.classesDir).builtBy(genJaxb))
-
 	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+	implementation "org.springframework.ws:spring-ws-support:2.1.4.RELEASE"
 }
 
 
-
-test {
-	useJUnitPlatform()
-}
