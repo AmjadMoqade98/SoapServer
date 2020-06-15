@@ -1,8 +1,8 @@
-package com.example.BackEnd.service;
+package com.Training.BackEnd.service;
 
-import com.example.BackEnd.model.Bundle;
-import com.example.BackEnd.repository.BundleRepository;
-import com.example.BackEnd.runnable.Consumer;
+import com.Training.BackEnd.model.Bundle;
+import com.Training.BackEnd.repository.BundleRepository;
+import com.Training.BackEnd.runnable.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,14 +37,10 @@ public class BundleService {
     }
 
     public void consumeBundles() {
-        Thread myThreads[] = new Thread[50000];
-
-        for (int j = 0; j < myThreads.length; j++) {
-            myThreads[j] = new Thread(new Consumer());
-        }
-
-        for (int j = 0; j < myThreads.length; j++) {
-            myThreads[j].start();
+        Thread ConsumingThreads[] = new Thread[50000];
+        for (int j = 0; j < ConsumingThreads.length; j++) {
+            ConsumingThreads[j] = new Thread(new Consumer());
+            ConsumingThreads[j].start();
         }
     }
 

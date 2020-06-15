@@ -1,4 +1,4 @@
-package com.example.BackEnd.config;
+package com.Training.BackEnd.config;
 
 import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.policy.ClientPolicy;

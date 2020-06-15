@@ -1,6 +1,6 @@
-package com.example.BackEnd.repository;
+package com.Training.BackEnd.repository;
 
-import com.example.BackEnd.model.Bundle;
+import com.Training.BackEnd.model.Bundle;
 import org.springframework.data.aerospike.repository.AerospikeRepository;
 import org.springframework.stereotype.Repository;
 

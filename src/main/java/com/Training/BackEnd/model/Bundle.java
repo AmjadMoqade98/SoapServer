@@ -1,4 +1,4 @@
-package com.example.BackEnd.model;
+package com.Training.BackEnd.model;
 
 import org.springframework.data.annotation.Id;
 
@@ -9,7 +9,7 @@ public class Bundle {
     private Double size ;
     private Double price  ;
     private String activateDate;
-    private String end_date ;
+    private String endDate ;
 
     public int getId() {
         return id;
@@ -26,12 +26,12 @@ public class Bundle {
         return price;
     }
 
-    public String getactivate_date() {
+    public String getActivateDate() {
         return activateDate;
     }
 
-    public String getEnd_date() {
-        return end_date;
+    public String getEndDate() {
+        return endDate;
     }
 
     public void setSize(Double size) {
@@ -42,11 +42,11 @@ public class Bundle {
         this.price = price;
     }
 
-    public void setactivate_date(String activate_date) {
+    public void setActivateDate(String activate_date) {
         this.activateDate = activate_date;
     }
 
-    public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+    public void setEndDate(String end_date) {
+        this.endDate = end_date;
     }
 }

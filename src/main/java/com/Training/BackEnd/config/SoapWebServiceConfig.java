@@ -1,5 +1,6 @@
-package com.example.BackEnd.config;
+package com.Training.BackEnd.config;
 
+import com.Training.BackEnd.Constants;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 
     @Bean
     public XsdSchema userSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("bundles.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource(Constants.SoapFile));
     }
 
     @Bean(name = "services")
@@ -35,7 +36,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         definition.setSchema(userSchema);
         definition.setLocationUri("/SoapBundles");
         definition.setPortTypeName("UserServicePort");
-        definition.setTargetNamespace("http://amjad.com/bundles");
+        definition.setTargetNamespace(Constants.SoapNamespace);
         return definition;
     }
 
