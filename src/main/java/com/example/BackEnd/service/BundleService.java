@@ -4,11 +4,7 @@ import com.example.BackEnd.model.Bundle;
 import com.example.BackEnd.repository.BundleRepository;
 import com.example.BackEnd.runnable.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,32 +14,27 @@ import java.util.Queue;
 @Service
 public class BundleService {
 
+    public static Queue<Bundle> bundlesContainer = new LinkedList<>();
     @Autowired
-    BundleRepository bundleRepository  ;
-
-    public static Queue<Bundle> bundlesContainer = new LinkedList<Bundle>();
-
+    BundleRepository bundleRepository;
 
     public List<Bundle> getBundles() {
-        List<Bundle> bundles = new ArrayList<Bundle>();
+        List<Bundle> bundles = new ArrayList<>();
         bundleRepository.findAll().forEach(bundles::add);
-        return bundles ;
+        return bundles;
     }
 
-    public Bundle getBundle(int id ) {
-        Bundle bundle = bundleRepository.findOne(id);
-        return bundle ;
+    public Bundle getBundle(int id) {
+        return bundleRepository.findOne(id);
     }
 
     public void addBundle(Bundle bundle) {
-
         bundleRepository.save(bundle);
     }
 
-    public void deleteBundle(int id )  {
+    public void deleteBundle(int id) {
         bundleRepository.delete(id);
     }
-
 
     public void consumeBundles() {
         Thread myThreads[] = new Thread[50000];
@@ -52,13 +43,12 @@ public class BundleService {
             myThreads[j] = new Thread(new Consumer());
         }
 
-        for (int j = 0 ; j<myThreads.length;j++) {
+        for (int j = 0; j < myThreads.length; j++) {
             myThreads[j].start();
         }
     }
 
-
-    public void produceBundle(Bundle bundle ) {
+    public void produceBundle(Bundle bundle) {
         bundlesContainer.add(bundle);
     }
 
