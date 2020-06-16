@@ -9,8 +9,6 @@ import com.Training.BackEnd.runnable.Consumer;
 import org.apache.commons.lang3.time.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,14 +21,12 @@ public class BundleService {
     @Autowired
     BundleRepository bundleRepository;
 
-
     public List<BundleResponseDto> getBundles() {
         List<BundleDao> bundlesDao = new ArrayList<>();
         bundleRepository.findAll().forEach(bundlesDao::add);
         System.out.println(bundlesDao.size());
         List<BundleResponseDto> bundlesDto = new ArrayList<>();
         for (BundleDao bundleDao : bundlesDao) {
-            System.out.println("ss");
             bundlesDto.add(convertToResponseDto(bundleDao));
         }
         return bundlesDto;
@@ -41,7 +37,7 @@ public class BundleService {
     }
 
     public void addBundle(BundleRequestDto bundleDto) {
-        if(GlobalVariables.AerospikeInitial) {
+        if (GlobalVariables.AerospikeInitial) {
             configureBundleId();
         }
         bundleRepository.save(convertToDao(bundleDto));
@@ -55,7 +51,7 @@ public class BundleService {
     public void consumeBundles() {
         Thread ConsumingThreads[] = new Thread[1];
         for (int j = 0; j < ConsumingThreads.length; j++) {
-            ConsumingThreads[j] = new Thread(new Consumer());
+            ConsumingThreads[j] = new Thread(new Consumer(this));
             ConsumingThreads[j].start();
         }
     }
@@ -94,13 +90,12 @@ public class BundleService {
      */
     private void configureBundleId() {
         List<BundleDao> bundles = new ArrayList<>();
-        System.out.println(bundleRepository);
         bundleRepository.findAll().forEach(bundles::add);
         if (bundles.size() == 0) {
             GlobalVariables.bundleId = 0;
         } else {
             GlobalVariables.bundleId = bundles.stream().mapToInt(v -> v.getId()).max().getAsInt() + 1;
         }
-        GlobalVariables.AerospikeInitial = false ;
+        GlobalVariables.AerospikeInitial = false;
     }
 }
