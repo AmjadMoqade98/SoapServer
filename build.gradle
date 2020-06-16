@@ -47,7 +47,7 @@ task genJaxb {
 			mkdir(dir: classesDir)
 
 			xjc(destdir: sourcesDir, schema: schema,
-					package: "com.example.consumingwebservice.wsdl") {
+					package: "com.Training.BackEnd.wsdl") {
 				arg(value: "-wsdl")
 				produces(dir: sourcesDir, includes: "**/*.java")
 			}
@@ -80,6 +80,10 @@ dependencies {
 	compile(files(genJaxb.classesDir).builtBy(genJaxb))
 	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
 	implementation "org.springframework.ws:spring-ws-support:2.1.4.RELEASE"
+	implementation "org.projectlombok:lombok:1.18.10"
+	implementation "org.modelmapper:modelmapper:2.3.5"
+	compile "org.apache.commons:commons-lang3:3.10"
+
 }
 
 

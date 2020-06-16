@@ -1,21 +1,20 @@
-package com.Training.BackEnd.model;
+package com.Training.BackEnd.dao;
 
 import org.springframework.data.annotation.Id;
 
-public class Bundle {
+
+public class BundleDao {
 
     @Id
     private int id ;
     private Double size ;
+    private int period ;
     private Double price  ;
     private String activateDate;
     private String endDate ;
 
     public int getId() {
         return id;
-    }
-    public void setId(int id) {
-        this.id = id ;
     }
 
     public Double getSize() {
@@ -34,6 +33,18 @@ public class Bundle {
         return endDate;
     }
 
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setSize(Double size) {
         this.size = size;
     }
@@ -42,11 +53,11 @@ public class Bundle {
         this.price = price;
     }
 
-    public void setActivateDate(String activate_date) {
-        this.activateDate = activate_date;
+    public void setActivateDate(String activateDate) {
+        this.activateDate = activateDate;
     }
 
-    public void setEndDate(String end_date) {
-        this.endDate = end_date;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableAerospikeRepositories(basePackages = "com.example.BackEnd.repository")
+@EnableAerospikeRepositories(basePackages = "com.Training.BackEnd.repository")
 public class AerospikeConfiguration {
 
     @Bean

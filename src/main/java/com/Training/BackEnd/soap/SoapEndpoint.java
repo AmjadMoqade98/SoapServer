@@ -2,10 +2,10 @@ package com.Training.BackEnd.soap;
 
 
 import com.Training.BackEnd.Constants;
-import com.Training.BackEnd.model.Bundle;
+import com.Training.BackEnd.dto.BundleRequestDto;
 import com.Training.BackEnd.service.BundleService;
-import com.example.consumingwebservice.wsdl.AddBundleRequest;
-import com.example.consumingwebservice.wsdl.AddBundleResponse;
+import com.Training.BackEnd.wsdl.AddBundleRequest;
+import com.Training.BackEnd.wsdl.AddBundleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -24,13 +24,11 @@ public class SoapEndpoint {
     public AddBundleResponse getUserRequest(@RequestPayload AddBundleRequest request) {
         AddBundleResponse response = new AddBundleResponse();
         response.setBundle(request.getBundle());
-        Bundle bundle = new Bundle();
-        bundle.setId(request.getBundle().getId());
-        bundle.setPrice(request.getBundle().getPrice());
-        bundle.setSize(request.getBundle().getSize());
-        bundle.setActivateDate(request.getBundle().getActivateDate());
-        bundle.setEndDate(request.getBundle().getEndDate());
-        bundleService.addBundle(bundle);
+        BundleRequestDto bundleDto = new BundleRequestDto();
+        bundleDto.setPrice(request.getBundle().getPrice());
+        bundleDto.setSize(request.getBundle().getSize());
+        bundleDto.setPeriod(request.getBundle().getPeriod());
+        bundleService.addBundle(bundleDto);
         return response;
     }
 

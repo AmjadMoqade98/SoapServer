@@ -1,37 +1,36 @@
 package com.Training.BackEnd.runnable;
 
-import com.Training.BackEnd.model.Bundle;
+import com.Training.BackEnd.controller.BundleController;
+import com.Training.BackEnd.dto.BundleRequestDto;
 import com.Training.BackEnd.service.BundleService;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 
-public class Consumer  implements  Runnable{
+public class Consumer implements  Runnable{
+
+    @Autowired
+    BundleService bundleService ;
 
     public void run() {
-        Bundle bundle ;
+//        int i = 100 ;
+//        while (i-- > 0 ) System.out.println(i + " &&& " + Thread.currentThread());
+        BundleRequestDto bundleRequestDtoDto ;
         while (true) {
             synchronized (BundleService.bundlesContainer) {
                 if (BundleService.bundlesContainer.isEmpty()) break ;
-                bundle = BundleService.bundlesContainer.poll();
+                bundleRequestDtoDto = BundleService.bundlesContainer.poll();
             }
             try {
-                Thread.sleep(200);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            if (bundle != null) {
-                RestTemplate restTemplate = new RestTemplate();
-                final String baseUrl = "http://localhost:8099/bundles";
-                URI uri = null;
-                try {
-                    uri = new URI(baseUrl);
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-                restTemplate.postForEntity(uri, bundle, String.class);
+            if (bundleRequestDtoDto != null) {
+                System.out.println(bundleService);
+                bundleService.addBundle(bundleRequestDtoDto);
             }
         }
     }
