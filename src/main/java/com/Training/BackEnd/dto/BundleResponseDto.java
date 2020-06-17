@@ -1,21 +1,30 @@
 package com.Training.BackEnd.dto;
 
 public class BundleResponseDto {
-    private Double size ;
-    private Double price  ;
+    private int id;
+    private Double size;
+    private Double price;
     private String activateDate;
-    private String endDate ;
+    private String endDate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Double getSize() {
         return size;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
     public void setSize(Double size) {
         this.size = size;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     public void setPrice(Double price) {
@@ -26,12 +35,12 @@ public class BundleResponseDto {
         return activateDate;
     }
 
-    public String getEndDate() {
-        return endDate;
-    }
-
     public void setActivateDate(String activateDate) {
         this.activateDate = activateDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
     }
 
     public void setEndDate(String endDate) {

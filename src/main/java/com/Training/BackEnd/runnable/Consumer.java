@@ -19,7 +19,7 @@ public class Consumer implements Runnable {
                 bundleRequestDtoDto = BundleService.bundlesContainer.poll();
             }
             try {
-                Thread.sleep(2000);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -1,10 +1,8 @@
 package com.Training.BackEnd.controller;
 
-import com.Training.BackEnd.dao.BundleDao;
 import com.Training.BackEnd.dto.BundleRequestDto;
 import com.Training.BackEnd.dto.BundleResponseDto;
 import com.Training.BackEnd.service.BundleService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -34,25 +32,20 @@ public class BundleController {
     @PostMapping
     public ResponseEntity addBundle(@RequestBody final BundleRequestDto bundleDto) {
         bundleService.addBundle(bundleDto);
-        return new ResponseEntity<>("bundle added to the queue", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBundle(@PathVariable("id") int id) {
         bundleService.deleteBundle(id);
-        return new ResponseEntity<>("bundle added to the queue", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping("/{id}")
-//    public void provision(@RequestBody final BundleDAO bundle) {
-//        bundleService.addBundle(bundle);
-//    }
-
-//    @PostMapping("/soap")
-//    public ResponseEntity<Object> getBundleSoap(@RequestBody final Bundle bundle) {
-//        bundleService.provisionBundle(bundle);
-//        return new ResponseEntity<>("bundle added to the queue", HttpStatus.OK);
-//    }
+    @PostMapping("/soap")
+    public ResponseEntity<Object> addBundleSoap(@RequestBody final BundleRequestDto bundleRequestDto) {
+        bundleService.provisionBundle(bundleRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/produce")
     public ResponseEntity<Object> produceBundle(@RequestBody BundleRequestDto bundleDto) {
