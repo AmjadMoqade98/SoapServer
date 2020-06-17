@@ -24,4 +24,6 @@ public class AerospikeConfiguration {
         clientPolicy.failIfNotConnected = true;
         return new AerospikeClient(clientPolicy, "172.28.128.4", 3000);
     }
+
+
 }

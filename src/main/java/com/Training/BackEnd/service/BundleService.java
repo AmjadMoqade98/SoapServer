@@ -14,18 +14,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class BundleService {
 
     public static Queue<BundleRequestDto> bundlesContainer = new LinkedList<>();
-
     @Autowired
     BundleRepository bundleRepository;
-
     @Autowired
     SoapClient soapClient;
+    String pattern = "yyyy-MM-dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
     public List<BundleResponseDto> getBundles() {
         List<BundleDao> bundlesDao = new ArrayList<>();
@@ -54,6 +55,10 @@ public class BundleService {
         bundleRepository.delete(id);
     }
 
+    public void deleteBundles() {
+        bundleRepository.deleteAll();
+    }
+
     public void consumeBundles() {
         Thread ConsumingThreads[] = new Thread[1];
         for (int j = 0; j < ConsumingThreads.length; j++) {
@@ -61,6 +66,7 @@ public class BundleService {
             ConsumingThreads[j].start();
         }
     }
+
 
     public AddBundleResponse provisionBundle(BundleRequestDto bundleDto) {
         BundleDtoSoap bundleDtoSoap = DtoRequestToSoapDto(bundleDto);
@@ -75,8 +81,8 @@ public class BundleService {
     private BundleDao RequestDtoToDao(BundleRequestDto bundleDto) {
         ModelMapper modelMapper = new ModelMapper();
         BundleDao bundle = modelMapper.map(bundleDto, BundleDao.class);
-        bundle.setActivateDate(new Date().toString());
-        bundle.setEndDate(DateUtils.addMonths(new Date(), bundleDto.getPeriod()).toString());
+        bundle.setActivateDate(getCurrentDate());
+        bundle.setEndDate(getEndDate(bundle.getPeriod()));
         bundle.setId(GlobalVariables.bundleId);
         return bundle;
     }
@@ -105,5 +111,13 @@ public class BundleService {
             GlobalVariables.bundleId = bundles.stream().mapToInt(v -> v.getId()).max().getAsInt() + 1;
         }
         GlobalVariables.AerospikeInitial = false;
+    }
+
+    public String getCurrentDate() {
+        return simpleDateFormat.format(new Date());
+    }
+
+    public String getEndDate(int period) {
+        return simpleDateFormat.format(DateUtils.addMonths(new Date(), period));
     }
 }

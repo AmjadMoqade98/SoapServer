@@ -41,6 +41,12 @@ public class BundleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping()
+    public ResponseEntity deleteBundles() {
+        bundleService.deleteBundles();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/soap")
     public ResponseEntity<Object> addBundleSoap(@RequestBody final BundleRequestDto bundleRequestDto) {
         bundleService.provisionBundle(bundleRequestDto);
