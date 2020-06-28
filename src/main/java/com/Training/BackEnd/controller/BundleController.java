@@ -28,6 +28,12 @@ public class BundleController {
         return bundleService.getBundle(id);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity testApi() {
+        return new ResponseEntity<>("Im working" , HttpStatus.OK);
+    }
+
+
     @PostMapping
     public ResponseEntity addBundle(@RequestBody final BundleRequestDto bundleDto) {
         bundleService.addBundle(bundleDto);
