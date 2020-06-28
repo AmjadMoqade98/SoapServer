@@ -6,6 +6,5 @@ import org.springframework.data.aerospike.repository.AerospikeRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Scope("prototype")
 public interface BundleRepository extends AerospikeRepository<BundleDao, Integer> {
 }

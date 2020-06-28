@@ -83,7 +83,9 @@ dependencies {
 	implementation "org.projectlombok:lombok:1.18.10"
 	implementation "org.modelmapper:modelmapper:2.3.5"
 	compile "org.apache.commons:commons-lang3:3.10"
-
+	compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+	compile "javax.xml.soap:javax.xml.soap-api:1.4.0"
+	compile "com.sun.xml.messaging.saaj:saaj-impl:1.5.1"
 }
 
 

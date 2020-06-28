@@ -5,10 +5,6 @@ import com.Training.BackEnd.dao.BundleDao;
 import com.Training.BackEnd.dto.BundleRequestDto;
 import com.Training.BackEnd.dto.BundleResponseDto;
 import com.Training.BackEnd.repository.BundleRepository;
-import com.Training.BackEnd.runnable.Consumer;
-import com.Training.BackEnd.soap.SoapClient;
-import com.Training.BackEnd.wsdl.AddBundleResponse;
-import com.Training.BackEnd.wsdl.BundleDtoSoap;
 import org.apache.commons.lang3.time.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +16,9 @@ import java.util.*;
 @Service
 public class BundleService {
 
-    public static Queue<BundleRequestDto> bundlesContainer = new LinkedList<>();
     @Autowired
     BundleRepository bundleRepository;
-    @Autowired
-    SoapClient soapClient;
+
     String pattern = "yyyy-MM-dd";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
@@ -51,39 +45,13 @@ public class BundleService {
         GlobalVariables.bundleId++;
     }
 
-    public void deleteBundle(int id) {
-        bundleRepository.delete(id);
-    }
-
-    public void deleteBundles() {
-        bundleRepository.deleteAll();
-    }
-
-    public void consumeBundles() {
-        Thread ConsumingThreads[] = new Thread[1];
-        for (int j = 0; j < ConsumingThreads.length; j++) {
-            ConsumingThreads[j] = new Thread(new Consumer(this));
-            ConsumingThreads[j].start();
-        }
-    }
-
-
-    public AddBundleResponse provisionBundle(BundleRequestDto bundleDto) {
-        BundleDtoSoap bundleDtoSoap = DtoRequestToSoapDto(bundleDto);
-        AddBundleResponse response = soapClient.addBundlesSoap(bundleDtoSoap);
-        return response;
-    }
-
-    public void produceBundle(BundleRequestDto bundleDto) {
-        bundlesContainer.add(bundleDto);
-    }
-
     private BundleDao RequestDtoToDao(BundleRequestDto bundleDto) {
         ModelMapper modelMapper = new ModelMapper();
         BundleDao bundle = modelMapper.map(bundleDto, BundleDao.class);
         bundle.setActivateDate(getCurrentDate());
         bundle.setEndDate(getEndDate(bundle.getPeriod()));
         bundle.setId(GlobalVariables.bundleId);
+        System.out.println(bundle.getId());
         return bundle;
     }
 
@@ -91,12 +59,6 @@ public class BundleService {
         ModelMapper modelMapper = new ModelMapper();
         BundleResponseDto bundleDto = modelMapper.map(bundle, BundleResponseDto.class);
         return bundleDto;
-    }
-
-    private BundleDtoSoap DtoRequestToSoapDto(BundleRequestDto bundleRequestDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        BundleDtoSoap bundleDtoSoap = modelMapper.map(bundleRequestDto, BundleDtoSoap.class);
-        return bundleDtoSoap;
     }
 
     /*
