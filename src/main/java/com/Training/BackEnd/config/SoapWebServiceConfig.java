@@ -39,5 +39,4 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         definition.setTargetNamespace(Constants.SoapNamespace);
         return definition;
     }
-
 }
